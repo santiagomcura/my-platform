@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HERMES-AGENT // ROADMAP DEL SISTEMA AGENTE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="terminal">
+
+    <div id="top-bar">
+      <span class="prompt-user">operator@hermes</span>
+      <span class="prompt-sep"> ~ $ </span>
+      <span class="prompt-cmd" id="top-cmd">hermes --roadmap</span>
+      <span class="spacer"></span>
+      <span class="top-status">
+        <span class="status-dot">■</span> SISTEMA AGENTE v0.1
+      </span>
+    </div>
+
+    <div id="viewport"></div>
+
+    <div id="bottom-bar">
+      <nav id="section-nav"></nav>
+      <div id="prompt-line">
+        <span class="prompt-arrow">&gt; root@sys </span>
+        <span class="cursor-block blink">█</span>
+      </div>
+    </div>
+
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
