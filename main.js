@@ -200,15 +200,15 @@ const state = {
 // ─────────────────────────────────────────────
 
 const HERO_CHAR = `\
-░░░░████░░░░
-░░██░░░░██░░
-░█░░◉░░◉░░█░
-░█░░░░▾░░░█░
-░░█░░░░░░█░░
-░░░██████░░░
-░░░░█░░█░░░░
-░░░░█░░█░░░░
-░░███░░███░░`;
+ ░▓▓▓▓▓▓▓▓░
+░▓░░░░░░░▓░
+▓░░ ◉  ◉ ░▓
+▓░░  ──  ░▓
+░▓░░░░░░░▓░
+ ░▓▓▓▓▓▓▓░
+  ░▓░  ░▓
+  ▓▓▓  ▓▓▓
+ ▓▓░    ░▓▓`;
 
 // ─────────────────────────────────────────────
 // RENDER HELPERS
@@ -312,22 +312,46 @@ function renderHome() {
       },
     });
 
-    const num = h('div', { class: 'card-num' }, s.id);
+    const num  = h('div', { class: 'card-num' }, s.id);
     const head = h('div', { class: 'card-head' },
       h('span', { class: 'card-icon' }, s.icon),
       h('span', { class: 'card-title' }, s.title)
     );
     const desc2 = h('div', { class: 'card-desc' }, s.description);
-    const ul = h('ul', { class: 'card-items' });
+    const rule  = h('hr', { class: 'card-rule' });
+    const ul    = h('ul', { class: 'card-items' });
     s.items.forEach(item => ul.appendChild(h('li', {}, item)));
 
-    const enter = h('div', { class: 'card-enter' }, '[ Enter ]');
-
-    card.append(num, head, desc2, ul, enter);
+    card.append(num, head, desc2, rule, ul);
     grid.appendChild(card);
   });
 
-  layout.append(grid, hero);
+  // ── System log panel ──
+  const sysLog = h('div', { class: 'sys-log' });
+  const now = new Date();
+  const ts = (offset = 0) => {
+    const d = new Date(now - offset * 1000);
+    return `[${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}]`;
+  };
+  const logEntries = [
+    { t: ts(12), cls: 'ok',   msg: 'hermes-agent v0.1 initialized' },
+    { t: ts(10), cls: 'ok',   msg: `${SECTIONS.length} modules registered` },
+    { t: ts(8),  cls: 'cmd',  msg: 'loading identity.json ... done' },
+    { t: ts(6),  cls: 'cmd',  msg: 'loading intelligence config ... done' },
+    { t: ts(4),  cls: 'ok',   msg: 'agent loop ready' },
+    { t: ts(2),  cls: 'warn', msg: 'memory: no active session found, starting fresh' },
+    { t: ts(0),  cls: 'ok',   msg: 'all systems nominal. awaiting input.' },
+  ];
+  logEntries.forEach(e => {
+    const line = h('div', { class: 'sys-log-line' });
+    line.innerHTML = `<span class="ts">${e.t}</span>  <span class="${e.cls}">${e.msg}</span>`;
+    sysLog.appendChild(line);
+  });
+  const prompt = h('div', { class: 'sys-log-prompt' });
+  prompt.innerHTML = `<span class="prompt-arrow">&gt; operator@hermes </span><span class="blink">█</span>`;
+  sysLog.appendChild(prompt);
+
+  layout.append(grid, sysLog, hero);
   vp.appendChild(layout);
   renderNav();
 }
@@ -409,7 +433,27 @@ function openSection(index) {
 
   footer.append(prevBtn, homeBtn2, nextBtn);
 
-  view.append(topbar, header, subsGrid, footer);
+  // ── Log area (fills remaining space) ──
+  const now = new Date();
+  const ts = () => `[${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}]`;
+  const log = h('div', { class: 'detail-log' });
+  const logLines = [
+    { ts: ts(), cls: 'log-ok',  msg: `module ${s.key} loaded successfully` },
+    { ts: ts(), cls: 'log-cmd', msg: `hermes --section=${s.key} --verbose` },
+    { ts: ts(), cls: 'log-info',msg: `${s.detail.subsections.length} subsections found` },
+    { ts: ts(), cls: 'log-info',msg: `reading context from ~/.hermes/config.json` },
+    { ts: ts(), cls: 'log-ok',  msg: `ready. press [←][→] to navigate sections` },
+  ];
+  logLines.forEach(l => {
+    const line = h('div', { class: 'log-line' });
+    line.innerHTML = `<span class="log-ts">${l.ts}</span><span class="${l.cls}">${l.msg}</span>`;
+    log.appendChild(line);
+  });
+  const logCursor = h('div', { class: 'log-cursor' });
+  logCursor.innerHTML = `<span class="prompt-arrow">&gt; hermes@${s.key} </span><span class="blink">█</span>`;
+  log.appendChild(logCursor);
+
+  view.append(topbar, header, subsGrid, footer, log);
   vp.appendChild(view);
   renderNav();
 }
