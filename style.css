@@ -640,3 +640,99 @@ body::after {
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--dim2); }
+
+/* ─────────────────────────────
+   RESPONSIVE
+───────────────────────────── */
+
+/* Tablet: 2-col cards, narrow hero sidebar */
+@media (max-width: 900px) {
+  .home-layout {
+    grid-template-columns: 1fr 150px;
+  }
+
+  .cards-area {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero-char { font-size: 5.5px; }
+  .hero-title { font-size: 11px; }
+}
+
+/* Mobile: single column, hero as compact top banner */
+@media (max-width: 640px) {
+  #viewport { padding: 4px 6px; overflow-y: auto; }
+
+  .home-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: auto;
+  }
+
+  /* Hero becomes a compact top strip */
+  .hero-panel {
+    grid-column: unset;
+    grid-row: unset;
+    order: 0;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+  }
+
+  .hero-char    { display: none; }
+  .hero-rule    { display: none; }
+  .hero-tags    { display: none; }
+  .hero-keyhint { display: none; }
+
+  .hero-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+  }
+
+  .hero-title { font-size: 12px; letter-spacing: 1px; }
+  .hero-sub   { display: none; }
+  .hero-desc  { font-size: 9px; line-height: 1.4; }
+
+  /* 2-column card grid */
+  .cards-area {
+    order: 1;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card { min-height: 0; }
+
+  /* Log panel: compact */
+  .sys-log {
+    order: 2;
+    min-height: 60px;
+  }
+
+  /* Detail view */
+  .detail-view { min-height: unset; }
+
+  .detail-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .detail-nav-hint { align-self: flex-end; }
+
+  .subsections-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-footer {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .detail-num-bg { display: none; }
+
+  /* Bottom nav: tighter */
+  .nav-btn { padding: 3px 7px; font-size: 8.5px; }
+}

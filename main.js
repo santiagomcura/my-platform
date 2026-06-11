@@ -274,13 +274,13 @@ function renderHome() {
 
   const charPre = h('pre', { class: 'hero-char' });
   charPre.textContent = HERO_CHAR;
-  hero.appendChild(charPre);
 
-  hero.appendChild(h('hr', { class: 'hero-divider' }));
+  // wrap text content so mobile can flex it next to pixel art
+  const infoCol = h('div', { class: 'hero-info-col' });
 
   const title = h('div', { class: 'hero-title' }, 'HERMES-AGENT');
-  const sub = h('div', { class: 'hero-sub' }, 'ROADMAP DEL SISTEMA AGENTE');
-  const desc = h('div', { class: 'hero-desc' },
+  const sub   = h('div', { class: 'hero-sub' },   'ROADMAP DEL SISTEMA AGENTE');
+  const desc  = h('div', { class: 'hero-desc' },
     'Hermes es un agente autónomo, modular y extensible. Diseñado para pensar, decidir y actuar en el mundo real.'
   );
 
@@ -296,7 +296,8 @@ function renderHome() {
     '<span class="key">1-8</span> ir directo<br>' +
     '<span class="key">Esc</span> volver';
 
-  hero.append(title, sub, desc, tags, hint);
+  infoCol.append(title, sub, desc, tags, hint);
+  hero.append(charPre, h('hr', { class: 'hero-rule' }), infoCol);
 
   // ── Cards grid ──
   const grid = h('div', { class: 'cards-area' });
