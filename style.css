@@ -111,13 +111,35 @@ body::after {
   letter-spacing: 0.5px;
 }
 
+.header-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .header-dot {
   width: 6px; height: 6px;
   background: var(--green);
   border-radius: 50%;
-  margin-left: auto;
   animation: pulse 2s ease-in-out infinite;
 }
+
+/* ── Music button ── */
+.music-btn {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--gold-dim);
+  background: none;
+  border: 1px solid var(--gold-lo);
+  padding: 0 5px;
+  cursor: pointer;
+  line-height: 1.6;
+  transition: color 0.1s, border-color 0.1s;
+}
+
+.music-btn:hover { color: var(--gold); border-color: var(--gold-dim); }
+.music-btn.muted { color: var(--dim); }
 
 @keyframes pulse {
   0%,100% { opacity: 1; }
@@ -236,6 +258,14 @@ body::after {
 }
 
 .menu-item.active .menu-label { color: var(--text); }
+
+.menu-check {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--green);
+  flex-shrink: 0;
+}
 
 /* ── Preview panel (right) ── */
 .preview-panel {
@@ -494,6 +524,91 @@ body::after {
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
 /* ─────────────────────────────
+   BOOT SCREEN
+───────────────────────────── */
+
+.boot-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px;
+}
+
+.boot-logo {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gold);
+  line-height: 1.35;
+  white-space: pre;
+  text-align: center;
+  letter-spacing: 0;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.boot-log {
+  min-width: 280px;
+  max-width: 380px;
+  width: 100%;
+}
+
+.boot-line {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--dim);
+  line-height: 1.9;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.boot-ok {
+  font-family: var(--px);
+  font-size: 7px;
+  color: var(--green);
+}
+
+.boot-progress {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.5px;
+  min-width: 280px;
+}
+
+.boot-start {
+  font-family: var(--px);
+  font-size: 7px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  animation: blink 0.9s step-end infinite;
+  cursor: pointer;
+  padding: 8px 16px;
+  border: 1px solid var(--gold-dim);
+  background: var(--panel);
+  transition: background 0.1s, border-color 0.1s;
+}
+
+.boot-start:hover {
+  background: var(--panel-hi);
+  border-color: var(--gold);
+}
+
+/* ─────────────────────────────
+   FOOTER PROGRESS
+───────────────────────────── */
+
+.footer-progress {
+  font-family: var(--px);
+  font-size: 6px;
+  color: var(--green-dim);
+  margin-left: auto;
+}
+
+/* ─────────────────────────────
    RESPONSIVE
 ───────────────────────────── */
 
@@ -520,4 +635,8 @@ body::after {
   .screen-footer { gap: 10px; padding: 5px 10px; }
 
   .btn-hint:nth-child(n+3) { display: none; }
+
+  .boot-logo { font-size: 8px; }
+  .footer-progress { display: none; }
+  .music-btn { font-size: 12px; }
 }
